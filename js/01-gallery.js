@@ -1,9 +1,8 @@
+
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-const galleryItemsRef = document.querySelector('.gallery__item');
-const imageGallery = document.querySelector('.gallery__link');
-
-galleryItemsRef.classList.add('gallery');
+const containerGallery = document.querySelector('.gallery__item');
+containerGallery.classList.add('gallery');
 
 const creatListMarkup = galleryItems.map(({
   preview,
@@ -19,17 +18,29 @@ const creatListMarkup = galleryItems.map(({
     />
   </a>`).join('');
 
-galleryItemsRef.insertAdjacentHTML('beforeend', creatListMarkup);
+containerGallery.insertAdjacentHTML('beforeend', creatListMarkup);
 
 
+containerGallery.addEventListener('click', onGalleryClick);
 
-console.log(galleryItemsRef)
+function onGalleryClick(evt) {
+  evt.preventDefault();
+      
+  const targetImageItemGallery = evt.target.classList.contains('gallery__image');
+  if (!targetImageItemGallery) {
+    return;
+  }
 
-// imageGallery.addEventListener('submit', onClick);
+  const instance = basicLightbox.create(`<img
+      class="gallery__image"
+      src=${evt.target.dataset.source}
+      alt=${evt.target.description}
+    />`)
+  instance.show()
+ 
+}
 
-// function onClick(evt) {
-//   evt.preventDefault();
-// }
+
 
 // -------------------------------------------------------------------------------------------------------------------
 // Завдання 1 - галерея зображень
@@ -63,9 +74,10 @@ console.log(galleryItemsRef)
 //   </a>
 // </div>
 
-// *onSearch*Зверни увагу на те, що зображення обгорнуте посиланням, отже по кліку за замовчуванням користувач буде 
+// Зверни увагу на те, що зображення обгорнуте посиланням, отже по кліку за замовчуванням користувач буде 
 // перенаправлений на іншу сторінку.Заборони цю поведінку за замовчуванням.
 
 // Закриття з клавіатури
 // Додай закриття модального вікна після натискання клавіші Escape.Зроби так, щоб прослуховування клавіатури було
-// тільки доти, доки відкрите модальне вікно.Бібліотека basicLightbox містить метод для програмного закриття модального вікна.
+// тільки доти, доки відкрите модальне вікно.Бібліотека basicLightbox містить метод для програмного закриття модального вікна
+
